@@ -1,4 +1,5 @@
 INTRODUCCIÓN
+
 Este informe describe un sistema electrónico que permite controlar la intensidad de tres LED de manera gradual, visualizando el ciclo de trabajo (duty cycle) de la señal de control. 
 El sistema utiliza modulación por ancho de pulso (PWM) para regular la cantidad de tiempo que los LED permanecen encendidos durante un período determinado. 
 Esto permite ajustar la percepción de brillo de los LEDs.
@@ -20,13 +21,13 @@ COMPONENTES DEL SISTEMA
 
 El sistema se compone de los siguientes elementos
 
-•  Microcontrolador: Un microcontrolador, es el cerebro del sistema. Se encarga de generar la señal PWM y regular la intensidad lumínica a los LEDs. 
+•  MICROCONTROLADOR: Un microcontrolador, es el cerebro del sistema. Se encarga de generar la señal PWM y regular la intensidad lumínica a los LEDs. 
 
 •  LEDs: Los LEDs son los dispositivos que emiten luz. En este caso, se utilizan tres LEDs para demostrar el control de intensidad individual. 
 
-•  Potenciómetro: Un potenciómetro se utiliza como entrada para el usuario, permitiendo ajustar el ciclo de trabajo de la señal PWM y, en consecuencia, la intensidad de los LEDs.
+•  POTENCIÓMETRO: Un potenciómetro se utiliza como entrada para el usuario, permitiendo ajustar el ciclo de trabajo de la señal PWM y, en consecuencia, la intensidad de los LEDs.
 
-•	Inclusión de Bibliotecas:
+•	INCLUSIÓN DE BIBLIOTECAS:
 
 o	stdio.h: contiene las definiciones y funciones básicas que nos permite realizar operaciones de entrada y salida en C, como printf() y scanf().
 
@@ -38,13 +39,13 @@ LECTURA DEL VALOR DEL ADC:
 
 	Para cambiar los valores del potenciómetro de 0 – 4095 a 0 – 1000 correspondiste al tiempo en estado alto, se utilizó la función map para convertir números de un rango a otro y guardarlos en el registro CCR1.
 
-o	Cálculo del Voltaje Real:
+o	CÁLCULO DEL VOLTAJE REAL:
 
 	Se calcula el voltaje real utilizando la siguiente fórmula: Voltaje = (adc_Valor * Voltaje de referencia) / (2^Resolución)
 
 	La fórmula toma en cuenta el valor leído del ADC (adc_Valor), la tensión de referencia del ADC (3.3V) y la resolución del ADC.
 
-o	Impresión del Resultado:
+o	IMPRESIÓN DEL RESULTADO:
 
 	Se utiliza la función printf() para imprimir en la UART el valor leído del ADC ("ADC CH1 value: ") seguido del valor leído, luego se imprimir el mensaje "Max sample value: " seguido del valor máximo posible de la lectura (1024).
 
