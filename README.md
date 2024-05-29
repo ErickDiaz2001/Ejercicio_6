@@ -62,7 +62,7 @@ ANÁLISIS DE RESULTADOS
  
 ![image](https://github.com/ErickDiaz2001/Ejercicio_6/assets/169405943/489da8ad-97c1-45b6-b244-93f9877ccc8b)
 
-
+https://youtu.be/-86ixYuWPiQ
 
 CONCLUSIÓN
 
