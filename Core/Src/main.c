@@ -48,9 +48,9 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
- uint16_t adc_value = 0;
- uint16_t adc_conversor = 0;
- uint16_t dutycycle =0;
+ uint16_t valor_adc = 0;
+ uint16_t valor_convercion_duty_cycle = 0;
+ uint16_t duty_cycle_porcentaje =0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -67,12 +67,13 @@ int __io_putchar(int ch)
 	return ch;
 }
 
+//La función map sirve para convertir números de un rango a otro
 uint16_t map( uint16_t x, uint16_t min_int, uint16_t max_int, uint16_t min_out, uint16_t max_out )
 {
-	uint16_t resultado = 0;
 
-	resultado = (x - min_int) * (max_out - min_out + 1) / (max_int - min_int + 1) + min_out;
-	//resultado = (x - min_int) * (max_out - min_out) / (max_int - min_int) + min_out;
+	uint16_t resultado;
+
+	resultado = (x - min_int) * (max_out - min_out) / (max_int - min_int) + min_out;
     return resultado;
 }
 
@@ -111,7 +112,10 @@ int main(void)
   MX_USART3_UART_Init();
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
+  // Calibramos el adc
+  HAL_ADCEx_Calibration_Start(&hadc1);
   HAL_ADC_Start_IT(&hadc1);
+  //PWM init
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
@@ -121,7 +125,10 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  printf("Duty Cycle: %d\n\r", dutycycle);
+	  TIM1->CCR2 = valor_convercion_duty_cycle;//ciclo de trabajo LED_1
+	  TIM1->CCR3 = valor_convercion_duty_cycle;//ciclo de trabajo LED_2
+	  TIM1->CCR4 = valor_convercion_duty_cycle;//ciclo de trabajo LED_3
+	  printf("Duty Cycle: %d\n\r", duty_cycle_porcentaje);//imptimimos el ciclo de trabajo en los leds
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -179,12 +186,12 @@ void SystemClock_Config(void)
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc1)
 {
-	adc_value = HAL_ADC_GetValue(hadc1);
-	adc_conversor = map(adc_value, 0, 4095, 0, 1000);
-	dutycycle = map(adc_value, 0, 1000, 0, 100);
-	TIM1->CCR2 = adc_conversor;
-	TIM1->CCR3 = adc_conversor;
-	TIM1->CCR4 = adc_conversor;
+	//obtenemos el valor del adc
+	valor_adc = HAL_ADC_GetValue(hadc1);
+	//convertimos el valor en ciclo de trabajo o ancho del pulso
+	valor_convercion_duty_cycle = map(valor_adc, 0, 4095, 0, 1000);
+	//convertimos el ciclo de trabajo en porventaje para imprimir en la terminal
+	duty_cycle_porcentaje = map(valor_convercion_duty_cycle, 0, 1000, 0, 100);
 }
 /* USER CODE END 4 */
 
