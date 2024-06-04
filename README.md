@@ -11,7 +11,7 @@ La blue pill utiliza 12bits de resolución (4096) en el ADC para convertir las s
 los valore que leeremos del Potenciómetro serán 0 en su valor mínimo y 4096 en su valor máximo. Se utilizará el ADC1, 
 habilitando continuous conversión mode, con un tiempo de muestreo de 239.5 ciclos, además de habilitar la interrupción del ADC.
 Para la comunicación se utilizó el USART3, sin interrupcion. También se utilizará el timer 1, se configuro el APB2 a 9MHz, 
-un prescaler a 180-1 y el counter period de 10000 para obtener una frecuencia de 50Hz. 
+un prescaler a 180-1 y el counter period de 1000 para obtener una frecuencia de 50Hz. 
 
 ![image](https://github.com/ErickDiaz2001/Ejercicio_6/assets/169405943/fb017e92-4440-420e-a0ff-9e63ceb6edeb)
 
